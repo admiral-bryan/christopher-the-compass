@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Christopher The Compass",
+  "version": "3.0.1",
+  "description": "Diagnostic and audit tools for Admiral property integrations.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "sidePanel",
+    "webRequest",
+    "cookies"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_title": "Open Compass Side Panel",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "terminal.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

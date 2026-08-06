@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christopher The Compass</title>
+  <link rel="stylesheet" href="src/css/terminal.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-title">
+      <span>⚓</span>
+      <span>CHRISTOPHER THE COMPASS</span>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="tab-audits">Audits</button>
+    <button class="tab-btn" data-tab="tab-devtools">Dev Tools</button>
+    <button class="tab-btn" data-tab="tab-settings">Settings ⚙️</button>
+  </div>
+  
+  <div class="container">
+    <div id="status">
+      <span id="status-text"></span>
+      <button id="dismissStatusBtn" class="status-dismiss-btn" title="Dismiss">×</button>
+    </div>
+
+    <div id="menu-view">
+      <!-- TAB 1: AUDITS -->
+      <div id="tab-audits" class="tab-panel active">
+        <div class="section-title">Property Management</div>
+        <div class="grid">
+          <button id="getLink" class="tool-btn full-width-btn">Launch Property Dashboard</button>
+        </div>
+
+        <div class="section-title">Diagnostics &amp; Audits</div>
+        <div class="grid">
+          <button id="checkTargeting" class="tool-btn">Targeting</button>
+          <button id="checkAdblock" class="tool-btn">Adblock</button>
+          <button id="checkCandidate" class="tool-btn">Candidate</button>
+          <button id="checkStrategy" class="tool-btn">Strategy</button>
+          
+          <button id="countAdsBtn" class="tool-btn full-width-btn" style="background-color: #f1f5f9; color: #1e293b;">
+            <span>📊 Count Page Ads</span>
+            <span class="beta-tag">BETA</span>
+          </button>
+          
+          <button id="checkAdTargetingBtn" class="tool-btn full-width-btn" style="background-color: #f1f5f9; color: #1e293b;">
+            🎯 Check Ad Request KVPs
+          </button>
+        </div>
+
+        <div class="section-title">Consent Checks</div>
+        <div class="grid">
+          <button id="checkCmp" class="tool-btn full-width-btn" style="padding: 8px;">Check CMP Privacy Frameworks</button>
+          <button id="checkConsentSignalsBtn" class="tool-btn full-width-btn" style="padding: 8px; background-color: #f1f5f9; color: #1e293b;">🇪🇺 Check Ad Request Consent Signals</button>
+        </div>
+      </div>
+
+      <!-- TAB 2: DEV TOOLS -->
+      <div id="tab-devtools" class="tab-panel">
+        <div class="section-title">Test Utilities</div>
+        <button id="setCookieBtn" class="tool-btn full-width-btn" style="margin-bottom: 10px; padding: 10px; background-color: #ffffff;">
+          🍪 Set Test Cookie
+        </button>
+
+        <div class="section-title">Platform Override</div>
+        <div class="card-module">
+          <div id="force-load-container"></div>
+        </div>
+      </div>
+
+      <!-- TAB 3: SETTINGS -->
+      <div id="tab-settings" class="tab-panel">
+        <div class="card-module">
+          <div style="font-size: 10.5px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">
+            Testing Cookie Config
+          </div>
+
+          <div class="form-group">
+            <label for="cookieKeyInput">Cookie Name (Key)</label>
+            <input type="text" id="cookieKeyInput" class="input-field" placeholder="e.g. admiral">
+          </div>
+
+          <div class="form-group">
+            <label for="cookieValInput">Cookie Value</label>
+            <input type="text" id="cookieValInput" class="input-field" placeholder="e.g. testing">
+          </div>
+
+          <div style="font-size: 10.5px; font-weight: 700; color: var(--text-main); margin-top: 12px; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span>Ad Request Targeting KVPs</span>
+            <button id="resetKvpsBtn" class="link-action" title="Reset KVPs to Default">Reset Default</button>
+          </div>
+
+          <div class="form-group">
+            <label for="targetingKeysInput">Keys / Pairs (comma-separated)</label>
+            <input type="text" id="targetingKeysInput" class="input-field" placeholder="admiral-engaged, ae=t, admiral-extended">
+          </div>
+
+          <div id="settingsValidationMsg" class="validation-msg">All fields must contain non-empty text strings.</div>
+
+          <button id="saveSettingsBtn" class="primary-btn" style="margin-top: 4px;">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERMINAL OUTPUT MONITOR -->
+    <div id="result-view" style="display: none;">
+      <div class="view-header">
+        <button id="backBtn" class="back-link">&larr; Back to Menu</button>
+        <div id="log-entry" class="log-header-right"></div>
+      </div>
+      <div id="result-content"></div>
+    </div>
+  </div>
+
+  <div class="footer" style="text-align:center; font-size: 8.5px; color: #94a3b8; padding: 8px 0 6px 0;">
+    Compass v3.0
+  </div>
+
+  <!-- Entry point for feature scripts -->
+  <script type="module" src="src/features/index.js"></script>
+</body>
+</html>
