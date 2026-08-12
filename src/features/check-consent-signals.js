@@ -157,8 +157,8 @@ export const initCheckConsentSignals = () => {
         <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 8px;">
           Ad Request Consent Signals
         </div>
-        ${gdprHTML}
         ${gppHTML}
+        ${gdprHTML}
         <button id="rescanConsentSignalsBtn" class="primary-btn" style="margin-top: 4px;">
           🔄 Re-Scan Consent Signals
         </button>

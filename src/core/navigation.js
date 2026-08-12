@@ -1,33 +1,50 @@
-import { updateStatus, generateLogHeader } from './utils.js';
+import { updateStatus, clearStatus, generateLogHeader } from './utils.js';
 
+/**
+ * Escapes special HTML characters to prevent XSS in dynamic cards
+ */
+const escapeHtml = (str) => String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+/**
+ * Transitions between UI views, cleans up status banners, and resets result content
+ */
 export const showView = (viewId, content = "", isRaw = false) => {
-  const menu = document.getElementById('menu-view');
-  const result = document.getElementById('result-view');
-  const resultContent = document.getElementById('result-content');
+  // 1. Always clear status banners when switching views
+  clearStatus();
+
+  // 2. Hide all top-level view containers
+  const views = document.querySelectorAll('.view-container');
+  views.forEach(v => v.style.display = 'none');
+
+  const menuView = document.getElementById('menuView') || document.getElementById('menu-view');
+  const resultView = document.getElementById('resultView') || document.getElementById('result-view');
+  const resultOutput = document.getElementById('resultOutput') || document.getElementById('result-content');
   const logEntry = document.getElementById('log-entry');
 
   if (viewId === 'result') {
-    updateStatus(""); // Clear notification banners upon rendering result
-
-    if (menu) menu.style.display = "none";
-    if (result) result.style.display = "block";
+    if (menuView) menuView.style.display = "none";
+    if (resultView) resultView.style.display = "block";
     if (logEntry) logEntry.innerText = generateLogHeader();
-    
-    if (resultContent) {
+
+    if (resultOutput) {
       if (isRaw) {
-        resultContent.innerHTML = `<pre>${content}</pre>`;
+        resultOutput.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word;">${content}</pre>`;
       } else {
-        resultContent.innerHTML = `<div style="text-align:center; padding: 12px 0; font-weight: 500; line-height: 1.4; font-size:11.5px;">${content}</div>`;
+        resultOutput.innerHTML = `<div style="text-align:center; padding: 12px 0; font-weight: 500; line-height: 1.4; font-size:11.5px;">${content}</div>`;
       }
     }
   } else {
-    if (menu) menu.style.display = "block";
-    if (result) result.style.display = "none";
-    
-    // CRITICAL FIX: Wipe result container so duplicate IDs don't collide on future scans
-    if (resultContent) resultContent.innerHTML = "";
-    
-    updateStatus("");
+    // 3. Force hide result view when switching to any standard tool/menu view
+    if (resultView) resultView.style.display = "none";
+    if (resultOutput) resultOutput.innerHTML = "";
+
+    // 4. Resolve target view accurately
+    const targetView = document.getElementById(`${viewId}View`) || document.getElementById(viewId);
+    if (targetView) {
+      targetView.style.display = 'block';
+    } else if (menuView) {
+      menuView.style.display = 'block';
+    }
   }
 };
 
@@ -119,12 +136,29 @@ export const bindJsonToggle = () => {
   }
 };
 
-const escapeHtml = (str) => String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-
+/**
+ * Binds global navigation listeners across header tabs and back buttons
+ */
 export const initNavigation = (onTabChange) => {
-  document.getElementById('backBtn')?.addEventListener('click', () => showView('menu'));
+  const handleNavClick = (targetViewId, activeBtnId = null) => {
+    showView(targetViewId);
+
+    // Sync header active tab state visually
+    if (activeBtnId) {
+      document.querySelectorAll('.header-tab, .nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(activeBtnId)?.classList.add('active');
+    }
+  };
+
+  // Header & Menu Back Buttons
+  document.getElementById('backBtn')?.addEventListener('click', () => handleNavClick('menuView', 'navAuditsBtn'));
+  document.getElementById('backToMenuBtn')?.addEventListener('click', () => handleNavClick('menuView', 'navAuditsBtn'));
+  document.getElementById('navAuditsBtn')?.addEventListener('click', () => handleNavClick('menuView', 'navAuditsBtn'));
+  document.getElementById('navDevToolsBtn')?.addEventListener('click', () => handleNavClick('devToolsView', 'navDevToolsBtn'));
+  document.getElementById('navSettingsBtn')?.addEventListener('click', () => handleNavClick('settingsView', 'navSettingsBtn'));
   document.getElementById('dismissStatusBtn')?.addEventListener('click', () => updateStatus(""));
 
+  // Tab switching inside feature sub-views
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const targetBtn = e.target.closest('.tab-btn');

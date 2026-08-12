@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "Christopher The Compass",
   "version": "3.0.1",
+  "incognito": "spanning",
   "description": "Diagnostic and audit tools for Admiral property integrations.",
   "permissions": [
     "activeTab",
@@ -9,7 +10,8 @@
     "storage",
     "sidePanel",
     "webRequest",
-    "cookies"
+    "cookies",
+    "declarativeNetRequest"
   ],
   "host_permissions": [
     "<all_urls>"

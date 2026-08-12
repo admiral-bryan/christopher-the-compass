@@ -1,5 +1,5 @@
 /**
- * CHRISTOPHER THE COMPASS - Background Engine & Ad Network Tracker
+ * CHRISTOPHER THE COMPASS - Background Engine & Service Worker
  */
 
 const AD_DOMAINS = [
@@ -15,16 +15,17 @@ const AD_DOMAINS = [
 ];
 
 const tabAdNetworkLog = {};
+const ADMIRAL_BLOCK_RULE_ID = 999;
 
-// 1. Tab Lifecycle Listeners & Cleanup
+// 1. Tab Lifecycle Listeners & Garbage Collection
 chrome.tabs.onRemoved.addListener(async (tabId) => {
-  // Clear in-memory log
   delete tabAdNetworkLog[tabId];
 
-  // Clean up session storage memory leak
+  // Clean up tab-isolated session storage memory
   try {
-    const key = `forcedScriptText_${tabId}`;
-    await chrome.storage.session.remove([key]);
+    const forcedScriptKey = `forcedScriptText_${tabId}`;
+    const blockedDomainKey = `blockedDomain_${tabId}`;
+    await chrome.storage.session.remove([forcedScriptKey, blockedDomainKey]);
   } catch (e) {
     // Session storage cleanup safety fallback
   }
@@ -46,11 +47,52 @@ chrome.webRequest.onCompleted.addListener(
   { urls: AD_DOMAINS }
 );
 
-// 3. Message Passing Endpoint
+// 3. Consolidated Message Passing Endpoint
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'getNetworkAdCount') {
-    sendResponse({ count: tabAdNetworkLog[request.tabId] || 0 });
+  switch (request.action) {
+    case 'getNetworkAdCount':
+      sendResponse({ count: tabAdNetworkLog[request.tabId] || 0 });
+      break;
+
+    case 'blockServingDomain': {
+      const domain = request.domain;
+      chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: [ADMIRAL_BLOCK_RULE_ID],
+        addRules: [{
+          id: ADMIRAL_BLOCK_RULE_ID,
+          priority: 1,
+          action: { type: 'block' },
+          condition: { 
+            urlFilter: `||${domain}^`, 
+            resourceTypes: ['script', 'xmlhttprequest', 'sub_frame'] 
+          }
+        }]
+      }, () => {
+        if (chrome.runtime.lastError) {
+          sendResponse({ success: false, error: chrome.runtime.lastError.message });
+        } else {
+          sendResponse({ success: true });
+        }
+      });
+      return true; // Keep message channel open for async response
+    }
+
+    case 'unblockServingDomain':
+      chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: [ADMIRAL_BLOCK_RULE_ID]
+      }, () => {
+        if (chrome.runtime.lastError) {
+          sendResponse({ success: false, error: chrome.runtime.lastError.message });
+        } else {
+          sendResponse({ success: true });
+        }
+      });
+      return true; // Keep message channel open for async response
+
+    default:
+      break;
   }
+
   return true;
 });
 
