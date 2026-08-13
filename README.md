@@ -1,6 +1,6 @@
 # ⚓ Christopher The Compass
 
-> **Version 3.0** | Diagnostic & Audit Extension for Admiral Property Integrations
+> **Version 3.1.0* | Diagnostic & Audit Extension for Admiral Property Integrations
 
 **Christopher The Compass** is a specialized Chrome Extension designed for managing properties, auditing privacy frameworks, and inspecting tag integrations using Admiral. It eliminates manual console debugging by automatically scanning website data to identify key metrics and provide direct navigation to management interfaces through a modern card-based diagnostic dashboard.
 
@@ -33,6 +33,7 @@ christopher-the-compass/
 │   ├── core/
 │   │   ├── navigation.js    # View state management & DOM utilities
 │   │   └── utils.js         # Active tab resolution, status banners, & helper functions
+│   │   └── storage.js         # Storage defaults and helpers
 │   └── features/
 │       ├── index.js         # Main module entry point
 │       ├── property-link.js # Property ID detection & portal launcher
@@ -46,4 +47,7 @@ christopher-the-compass/
 │       ├── check-consent-signals.js
 │       ├── test-cookie.js
 │       └── force-load.js
+│       └── inject-dns.js
+│       └── serving-domain.js
+│       └── settings.js
 └── icon.png                 # Extension branding icon
