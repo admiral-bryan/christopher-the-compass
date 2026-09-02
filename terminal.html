@@ -12,6 +12,7 @@
       <span>⚓</span>
       <span>CHRISTOPHER THE COMPASS</span>
     </div>
+    <span class="version-tag">v3.2</span>
   </div>
 
   <div class="tab-bar">
@@ -21,7 +22,7 @@
   </div>
   
   <div class="container">
-    <div id="status">
+    <div id="status" class="status-banner">
       <span id="status-text"></span>
       <button id="dismissStatusBtn" class="status-dismiss-btn" title="Dismiss">×</button>
     </div>
@@ -29,68 +30,92 @@
     <div id="menu-view">
       <!-- TAB 1: AUDITS -->
       <div id="tab-audits" class="tab-panel active">
+        
+        <!-- PROPERTY MANAGEMENT -->
         <div class="section-title">Property Management</div>
-        <div class="grid">
-          <button id="getLink" class="tool-btn full-width-btn">Launch Property Dashboard</button>
+        <div class="card-module">
+          <button id="getLink" class="tool-btn primary-action-btn full-width-btn">
+            🚀 Launch Property Dashboard
+          </button>
         </div>
 
+        <!-- DIAGNOSTICS & AUDITS -->
         <div class="section-title">Diagnostics &amp; Audits</div>
-        <div class="grid">
-          <button id="checkTargeting" class="tool-btn">Targeting</button>
-          <button id="checkAdblock" class="tool-btn">Adblock</button>
-          <button id="checkCandidate" class="tool-btn">Candidate</button>
-          <button id="checkStrategy" class="tool-btn">Strategy</button>
-          
-          <button id="checkClientProtectBtn" class="tool-btn full-width-btn" style="background-color: #f1f5f9; color: #1e293b;">
-            🛡️ Check Client Protect
-          </button>
-
-          <button id="countAdsBtn" class="tool-btn full-width-btn" style="background-color: #f1f5f9; color: #1e293b;">
-            <span>📊 Count Page Ads</span>
-            <span class="beta-tag">BETA</span>
-          </button>
-          
-          <button id="checkAdTargetingBtn" class="tool-btn full-width-btn" style="background-color: #f1f5f9; color: #1e293b;">
-            🎯 Check Ad Request KVPs
-          </button>
+        <div class="card-module">
+          <div class="grid">
+            <button id="checkTargeting" class="tool-btn">🎯 Targeting</button>
+            <button id="checkAdblock" class="tool-btn">🛡️ Adblock</button>
+            <button id="checkCandidate" class="tool-btn">🔍 Candidate</button>
+            <button id="checkStrategy" class="tool-btn">⚙️ Strategy</button>
+          </div>
+          <div class="stack-grid">
+            <button id="checkClientProtectBtn" class="tool-btn full-width-btn feature-btn">
+              <span>🛡️ Check Client Protect</span>
+            </button>
+            <button id="countAdsBtn" class="tool-btn full-width-btn feature-btn">
+              <span>📊 Count Page Ads</span>
+              <span class="beta-tag">BETA</span>
+            </button>
+            <button id="checkAdTargetingBtn" class="tool-btn full-width-btn feature-btn">
+              🎯 Check Ad Request KVPs
+            </button>
+          </div>
         </div>
 
+        <!-- CONSENT CHECKS -->
         <div class="section-title">Consent Checks</div>
-        <div class="grid">
-          <button id="checkCmp" class="tool-btn full-width-btn" style="padding: 8px;">Check CMP Privacy Frameworks</button>
-          <button id="checkConsentSignalsBtn" class="tool-btn full-width-btn" style="padding: 8px; background-color: #f1f5f9; color: #1e293b;">🇪🇺 Check Ad Request Consent Signals</button>
+        <div class="card-module">
+          <div class="stack-grid">
+            <button id="checkCmp" class="tool-btn full-width-btn feature-btn">
+              ⚖️ Check CMP Privacy Frameworks
+            </button>
+            <button id="checkConsentSignalsBtn" class="tool-btn full-width-btn feature-btn">
+              🇪🇺 Check Ad Request Consent Signals
+            </button>
+          </div>
         </div>
+
       </div>
 
       <!-- TAB 2: DEV TOOLS -->
       <div id="tab-devtools" class="tab-panel">
+        
+        <!-- TEST UTILITIES -->
         <div class="section-title">Test Utilities</div>
-        <button id="setCookieBtn" class="tool-btn full-width-btn" style="margin-bottom: 10px; padding: 10px; background-color: #ffffff;">
-          🍪 Set Test Cookie
-        </button>
+        <div class="card-module">
+          <button id="setCookieBtn" class="tool-btn full-width-btn feature-btn">
+            🍪 Set Test Cookie
+          </button>
+        </div>
 
+        <!-- PLATFORM OVERRIDE -->
         <div class="section-title">Platform Override</div>
-        <div class="card-module" style="margin-bottom: 12px;">
+        <div class="card-module">
           <div id="force-load-container"></div>
         </div>
 
+        <!-- PRIVACY & CONSENT UTILITIES -->
         <div class="section-title">Privacy &amp; Consent Utilities</div>
-        <div class="grid">
-          <button id="getServingDomainBtn" class="tool-btn full-width-btn" style="margin-bottom: 8px; background-color: #ffffff;">
-            🌐 Inspect Serving Domain
-          </button>
-          <button id="injectDnsBtn" class="tool-btn full-width-btn" style="background-color: #ffffff;">
-            🔗 Inject Do Not Sell Link
-          </button>
+        <div class="card-module">
+          <div class="stack-grid">
+            <button id="getServingDomainBtn" class="tool-btn full-width-btn feature-btn">
+              🌐 Inspect Serving Domain
+            </button>
+            <button id="injectDnsBtn" class="tool-btn full-width-btn feature-btn">
+              🔗 Inject Do Not Sell Link
+            </button>
+          </div>
         </div>
+
       </div>
 
       <!-- TAB 3: SETTINGS -->
       <div id="tab-settings" class="tab-panel">
         <div class="card-module">
+          
           <!-- Testing Cookie Config -->
-          <div style="font-size: 10.5px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">
-            Testing Cookie Config
+          <div class="form-header">
+            <span>Testing Cookie Config</span>
           </div>
 
           <div class="form-group">
@@ -104,7 +129,7 @@
           </div>
 
           <!-- Ad Request Targeting KVPs -->
-          <div style="font-size: 10.5px; font-weight: 700; color: var(--text-main); margin-top: 14px; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+          <div class="form-header flex-between">
             <span>Ad Request Targeting KVPs</span>
             <button id="resetKvpsBtn" class="link-action" title="Reset KVPs to Default">Reset Default</button>
           </div>
@@ -115,7 +140,7 @@
           </div>
 
           <!-- Do Not Sell Link Config -->
-          <div style="font-size: 10.5px; font-weight: 700; color: var(--text-main); margin-top: 14px; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+          <div class="form-header flex-between">
             <span>Do Not Sell Link Config</span>
             <button id="resetDnsSelectorBtn" class="link-action" title="Reset Selector to Default">Reset Default</button>
           </div>
@@ -130,9 +155,9 @@
             <input type="text" id="dnsCustomCssInput" class="input-field" placeholder="e.g. color: #38bdf8; font-weight: bold; background: #000;">
           </div>
 
-          <div id="settingsValidationMsg" class="validation-msg" style="margin-top: 10px;">Required fields must contain non-empty text strings.</div>
+          <div id="settingsValidationMsg" class="validation-msg">Required fields must contain non-empty text strings.</div>
 
-          <button id="saveSettingsBtn" class="primary-btn" style="margin-top: 12px; width: 100%;">Save Settings</button>
+          <button id="saveSettingsBtn" class="primary-btn full-width-btn" style="margin-top: 10px;">Save Settings</button>
         </div>
       </div>
     </div>
@@ -147,8 +172,8 @@
     </div>
   </div>
 
-  <div class="footer" style="text-align:center; font-size: 8.5px; color: #94a3b8; padding: 8px 0 6px 0;">
-    Compass v3.1
+  <div class="footer">
+    Compass v3.2
   </div>
 
   <!-- Entry point for feature scripts -->

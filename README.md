@@ -40,6 +40,7 @@ christopher-the-compass/
 │       ├── check-targeting.js
 │       ├── check-adblock.js
 │       ├── check-candidate.js
+│       ├── check-client-protect.js
 │       ├── check-strategy.js
 │       ├── count-ads.js
 │       ├── check-ad-targeting.js
