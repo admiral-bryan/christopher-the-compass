@@ -11,6 +11,7 @@ import { initCheckCmp } from './check-cmp.js';
 import { initCountAds } from './count-ads.js';
 import { initCheckAdTargeting } from './check-ad-targeting.js';
 import { initCheckConsentSignals } from './check-consent-signals.js';
+import { initCheckClientProtect } from './check-client-protect.js';
 
 // Dev Tools & Utility Modules
 import { initServingDomain } from './serving-domain.js';
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initCountAds();
   initCheckAdTargeting();
   initCheckConsentSignals();
+  initCheckClientProtect();
 
   // 4. Register Dev Tools & Utility listeners
   initServingDomain();
